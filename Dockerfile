@@ -3,6 +3,7 @@ FROM debian:13.1-slim
 ENV BW_VERSION=2025.11.0
 ENV DEBIAN_FRONTEND=noninteractive
 
+# install bitwarden-cli
 RUN <<EOF
   apt-get update
   apt-get install -y --no-install-recommends ca-certificates wget unzip
@@ -15,10 +16,12 @@ RUN <<EOF
   apt-get purge -y unzip
 EOF
 
+# run rootless
 USER 1000
 WORKDIR /bw
 ENV HOME=/bw
 
+# copy entrypoint and make it executable
 COPY --chmod=0755 entrypoint.sh /
 
 ENTRYPOINT ["/entrypoint.sh"]
