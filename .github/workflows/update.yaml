@@ -19,7 +19,10 @@ jobs:
       - name: Get latest version
         id: version
         run: |
-          echo "version=$(gh api repos/bitwarden/clients/git/refs/tags -q '.[] | select(.ref | startswith("refs/tags/cli-v")) | .ref | ltrimstr("refs/tags/cli-v")' | sort -V | tail -1)" >> "$GITHUB_OUTPUT"
+          {
+            echo -n 'version='
+            gh api repos/bitwarden/clients/git/refs/tags -q '.[] | select(.ref | startswith("refs/tags/cli-v")) | .ref | ltrimstr("refs/tags/cli-v")' | sort -V | tail -1
+          } >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ github.token }}
 
