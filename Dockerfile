@@ -15,6 +15,10 @@ RUN <<EOF
   apt-get purge -y unzip
 EOF
 
+USER 1000
+WORKDIR /bw
+ENV HOME=/bw
+
 COPY --chmod=0755 entrypoint.sh /
 
 ENTRYPOINT ["/entrypoint.sh"]
