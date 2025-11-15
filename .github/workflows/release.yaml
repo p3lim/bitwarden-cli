@@ -1,0 +1,44 @@
+name: release
+
+on:
+  push:
+    paths:
+      - Dockerfile
+      - entrypoint.sh
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_CLI_EXPERIMENTAL: enabled # needed for docker manifests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Cosign
+        uses: sigstore/cosign-installer@v4
+
+      - name: Get version
+        id: version
+        run: |
+          echo "::set-output name=version::$(awk -F= '/BW_VERSION=/{print $2}')"
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ github.token }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/${{ github.repository }}:${{ steps.version.outputs.version }}
+
+      - name: Sign artifacts with Cosign
+        run: |
+          cosign sign --yes ghcr.io/${{ github.repository }}:${{ github.sha }}
+          cosign sign --yes ghcr.io/${{ github.repository }}:${{ steps.version.outputs.version }}

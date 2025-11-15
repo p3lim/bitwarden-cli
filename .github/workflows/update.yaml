@@ -1,0 +1,31 @@
+name: Update
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get latest version
+        id: version
+        run: |
+          echo "::set-output name=version::$(gh api repos/bitwarden/clients/git/refs/tags -q '.[] | select(.ref | startswith("refs/tags/cli-v")) | .ref | ltrimstr("refs/tags/cli-v")' | sort -V)"
+
+      - name: Update version string
+        run: |
+          sed -Ei 's/(BW_VERSION=)[0-9.]+/\1${{ steps.version.outputs.version }}/' Dockerfile
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          title: 'Update Bitwarden version'
+          body:
+          commit-message: 'Update Bitwarden version'
+          branch: update-bitwarden
+          delete-branch: true
