@@ -12,7 +12,7 @@ RUN <<EOF
   unzip "bw-linux-${BW_VERSION}.zip"
   rm -fv "bw-linux-${BW_VERSION}.zip"
   mv bw /usr/local/bin/
-  apt-get remove unzip
+  apt-get purge -y unzip
 EOF
 
 COPY entrypoint.sh /
