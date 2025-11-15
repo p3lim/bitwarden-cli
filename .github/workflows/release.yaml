@@ -47,5 +47,4 @@ jobs:
 
       - name: Sign artifacts with Cosign
         run: |
-          cosign sign --yes ghcr.io/${{ github.repository }}:${{ github.sha }}
-          cosign sign --yes ghcr.io/${{ github.repository }}:${{ steps.version.outputs.version }}
+          cosign sign --yes ghcr.io/${{ github.repository }}:${{ github.ref_name }}
