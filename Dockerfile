@@ -1,4 +1,4 @@
-FROM debian:12.11-slim
+FROM debian:13.1-slim
 
 ENV BW_VERSION=2025.9.0
 ENV DEBIAN_FRONTEND=noninteractive
