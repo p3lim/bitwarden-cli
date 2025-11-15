@@ -15,6 +15,6 @@ RUN <<EOF
   apt-get purge -y unzip
 EOF
 
-COPY entrypoint.sh /
+COPY --chmod=0755 entrypoint.sh /
 
 ENTRYPOINT ["/entrypoint.sh"]
