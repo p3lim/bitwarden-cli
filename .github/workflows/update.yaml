@@ -15,7 +15,7 @@ jobs:
       - name: Get latest version
         id: version
         run: |
-          echo "::set-output name=version::$(gh api repos/bitwarden/clients/git/refs/tags -q '.[] | select(.ref | startswith("refs/tags/cli-v")) | .ref | ltrimstr("refs/tags/cli-v")' | sort -V)"
+          echo "version=$(gh api repos/bitwarden/clients/git/refs/tags -q '.[] | select(.ref | startswith("refs/tags/cli-v")) | .ref | ltrimstr("refs/tags/cli-v")' | sort -V)" >> "$GITHUB_OUTPUT"
 
       - name: Update version string
         run: |
