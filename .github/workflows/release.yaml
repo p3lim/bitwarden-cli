@@ -16,8 +16,6 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
-    env:
-      DOCKER_CLI_EXPERIMENTAL: enabled # needed for docker manifests
     steps:
       - name: Checkout
         uses: actions/checkout@v5
