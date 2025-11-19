@@ -11,7 +11,7 @@ RUN <<EOF
   apt-get clean
   rm -rf /var/lib/apt/lists/*
   wget --no-verbose "https://github.com/bitwarden/clients/releases/download/cli-v${BW_VERSION}/bw-oss-linux-${BW_VERSION}.zip"
-  sha256sum -c - <<< "$BW_DIGEST bw-oss-linux-${BW_VERSION}.zip"
+  echo "$BW_DIGEST bw-oss-linux-${BW_VERSION}.zip" | sha256sum -c -
   unzip "bw-oss-linux-${BW_VERSION}.zip"
   rm -fv "bw-oss-linux-${BW_VERSION}.zip"
   mv bw /usr/local/bin/
