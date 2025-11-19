@@ -1,7 +1,7 @@
 FROM debian:13.2-slim
 
 ARG BW_VERSION=2025.11.0
-ARG BW_DIGEST=abc
+ARG BW_DIGEST=c56ee62bd8ba5319cbbda9cd67f70a3299e76fe4584597a6f28da785099f6447
 ENV DEBIAN_FRONTEND=noninteractive
 
 # install bitwarden-cli
