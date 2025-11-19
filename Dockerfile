@@ -1,6 +1,7 @@
 FROM debian:13.2-slim
 
 ARG BW_VERSION=2025.11.0
+ARG BW_DIGEST=abc
 ENV DEBIAN_FRONTEND=noninteractive
 
 # install bitwarden-cli
@@ -10,6 +11,7 @@ RUN <<EOF
   apt-get clean
   rm -rf /var/lib/apt/lists/*
   wget --no-verbose "https://github.com/bitwarden/clients/releases/download/cli-v${BW_VERSION}/bw-oss-linux-${BW_VERSION}.zip"
+  sha256sum -c - <<< "$BW_DIGEST bw-oss-linux-${BW_VERSION}.zip"
   unzip "bw-oss-linux-${BW_VERSION}.zip"
   rm -fv "bw-oss-linux-${BW_VERSION}.zip"
   mv bw /usr/local/bin/

@@ -26,9 +26,18 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
-      - name: Update version string
+      - name: Get digest
+        id: digest
+        run: |
+          {
+            echo -n 'digest='
+            gh api repos/bitwarden/clients/releases/tags/cli-v${{ steps.version.outputs.version }} -q '.assets[] | select(name | startswith("bw-oss-linux")) | .digest | split(":") | last'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Update version and digest
         run: |
           sed -Ei 's/(BW_VERSION=)[0-9.]+/\1${{ steps.version.outputs.version }}/' Dockerfile
+          sed -Ei 's/(BW_DIGEST=)[a-f0-9]+/\1${{ steps.digest.outputs.version }}/' Dockerfile
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v7
