@@ -39,7 +39,7 @@ jobs:
       - name: Update version and digest
         run: |
           sed -Ei 's/(BW_VERSION=)[0-9.]+/\1${{ steps.version.outputs.version }}/' Dockerfile
-          sed -Ei 's/(BW_DIGEST=)[a-f0-9]+/\1${{ steps.digest.outputs.version }}/' Dockerfile
+          sed -Ei 's/(BW_DIGEST=)[a-f0-9]+/\1${{ steps.digest.outputs.digest }}/' Dockerfile
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v7
