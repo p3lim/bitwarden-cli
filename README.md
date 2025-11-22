@@ -2,14 +2,30 @@
 
 This repository contains a container image intended to be used as a [Bitwarden](https://bitwarden.com) "server" for [external-secrets](https://external-secrets.io/latest/examples/bitwarden).
 
-It expects two environment variables, as per [the official documentation](https://bitwarden.com/help/cli/#using-an-api-key):
+### Environment variables
 
-- `BW_CLIENTID`
-- `BW_CLIENTSECRET`
+These should be pretty much self-explanatory.
 
-Optionally you can also specify a different server with `BW_SERVER`.
+- `BW_USERNAME`
+- `BW_PASSWORD`
+- `BW_PASSWORD_FILE`
+	- defaults to `/secrets/BW_PASSWORD`
+	- this is recommended over `BW_PASSWORD` envvar
+- `BW_SERVER`
+	- defaults to whatever the Bitwarden CLI sets as a default
+- `BW_PORT`
+	- defaults to `8087`
 
-It will listen on port `8087` by default, overridable with `BW_PORT`
+### Usage
+
+Follow the guide provided in the docs for external-secrets found here:  
+<https://external-secrets.io/latest/examples/bitwarden>  
+
+> It is **highly** recommended to deploy a network policy with this, otherwise the unlocked vault will be accessible by the entire cluster!
+
+Substitute this image: `ghcr.io/p3lim/ghcr.io/p3lim/bitwarden-cli:VERSION`  
+See the latest version tags here:  
+<https://github.com/p3lim/bitwarden-cli/pkgs/container/bitwarden-cli>
 
 ### Vault sync
 
