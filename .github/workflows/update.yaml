@@ -42,7 +42,7 @@ jobs:
           sed -Ei 's/(BW_DIGEST=)[a-f0-9]+/\1${{ steps.digest.outputs.digest }}/' Dockerfile
 
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           title: 'Update Bitwarden version'
           body:
