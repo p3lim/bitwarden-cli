@@ -26,7 +26,7 @@ jobs:
           echo "version=$(awk -F= '/BW_VERSION=/{print $2}' Dockerfile)" >> "$GITHUB_OUTPUT"
 
       - name: Login to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
